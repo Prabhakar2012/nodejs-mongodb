@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+
+  mongodb:
+    container_name: test1_container
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    volumes:
+      - mongodb:/data/db
+
+  api:
+      build: .
+      ports:
+        - 8080:3000
+      
+      environment:
+        PORT: 3000
+        MONGO_INITDB_DATABASE: my_db
+        MONGO_INITDB_ROOT_USERNAME: admin
+        MONGO_INITDB_ROOT_PASSWORD: password123
+
+       
+        MONGODB_URI: mongodb://mongodb:27017
+        DB_NAME: my_db
+       
+        NAME: Prabhakar
+      depends_on:
+        - mongodb 
+
+volumes:
+  mongodb: {}
+
+  
+
+        
+
+
+
